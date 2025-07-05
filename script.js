@@ -7,21 +7,30 @@ async function fetchBhajans() {
   bhajans = await res.json();
   filtered = [...bhajans];
   buildCategorySelect();
+  buildDatalist();      // populate suggestions
   render();
 }
 
 function buildCategorySelect() {
   const select = document.getElementById("categorySelect");
   const cats = [...new Set(bhajans.map(b => b.Category || "Uncategorized"))];
-  select.innerHTML = "<option>All</option>" + cats.map(c => `<option>${c}</option>`).join("");
+  select.innerHTML = "<option>All</option>" +
+    cats.map(c => `<option>${c}</option>`).join("");
   select.onchange = () => {
     const v = select.value;
-    filtered = v === "All"
+    filtered = (v === "All")
       ? [...bhajans]
       : bhajans.filter(b => (b.Category||"") === v);
     page = 1;
     render();
   };
+}
+
+function buildDatalist() {
+  const dl = document.getElementById("bhajan-list");
+  dl.innerHTML = bhajans
+    .map(b => `<option value="${b["Bhajan Name"]}">`)
+    .join("");
 }
 
 function render() {
@@ -37,8 +46,6 @@ function render() {
       const isFav = getFavorites().includes(b["Bhajan Name"]);
       const card = document.createElement("div");
       card.className = "rounded-lg p-4 shadow";
-      card.style.backgroundColor = getComputedStyle(document.documentElement)
-        .getPropertyValue('background') || '';
       card.innerHTML = `
         <div class="flex justify-between items-start">
           <h3 class="text-lg font-medium">${b["Bhajan Name"]}</h3>
@@ -54,7 +61,8 @@ function render() {
     });
   }
 
-  document.getElementById("pageInfo").textContent = `${page}/${Math.ceil(filtered.length / perPage)}`;
+  document.getElementById("pageInfo").textContent =
+    `${page}/${Math.ceil(filtered.length / perPage)}`;
 }
 
 // SEARCH
@@ -89,8 +97,7 @@ favBtn.onclick = () => {
   filtered = showingFavs
     ? bhajans.filter(b=>getFavorites().includes(b["Bhajan Name"]))
     : [...bhajans];
-  page = 1;
-  render();
+  page = 1; render();
 };
 
 // RANDOM
@@ -101,7 +108,8 @@ document.getElementById("randomBtn").onclick = () => {
 
 // DARK MODE
 function setModeButton() {
-  darkBtn.textContent = document.documentElement.classList.contains("dark") ? "☀️" : "🌙";
+  darkBtn.textContent =
+    document.documentElement.classList.contains("dark") ? "☀️" : "🌙";
 }
 darkBtn.onclick = () => {
   const html = document.documentElement;
@@ -124,10 +132,8 @@ function closeModal() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Hook up modal close
   document.getElementById("closeModal").onclick = closeModal;
 
-  // Download & copy in modal
   document.getElementById("downloadBtn").onclick = () => {
     const title = document.getElementById("modalTitle").textContent;
     const b = bhajans.find(x => x["Bhajan Name"] === title);
@@ -148,8 +154,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
   };
 
-  // Init theme & data
-  if (localStorage.getItem("dark")==="true") document.documentElement.classList.add("dark");
+  if (localStorage.getItem("dark")==="true")
+    document.documentElement.classList.add("dark");
   setModeButton();
   await fetchBhajans();
 });
