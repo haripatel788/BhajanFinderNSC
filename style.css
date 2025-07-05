@@ -1,105 +1,131 @@
-/* 1) Color variables */
+/*────────────────────────────────────────────────────────────────────────────*/
+/* Minimalist Palette & Typography                                           */
+/*────────────────────────────────────────────────────────────────────────────*/
 :root {
-  --baps-bg-light: #81D2C7;
-  --baps-bg-dark:  #416788;
-  --baps-text-light: #EEF1EF;
-  --baps-text-dark:  #CE8964;
-  --baps-border:    #7389AE;
-  --baps-accent:    #CE8964;
+  --bg-light:       #FFFFFF;
+  --bg-dark:        #1F2937;
+  --text-primary:   #111827;
+  --text-secondary: #6B7280;
+  --accent:         #3B82F6;
+  --border:         #E5E7EB;
+  --shadow:         rgba(0,0,0,0.05);
 }
 
-/* 2) Body background & text */
-body {
-  background-color: var(--baps-bg-light);
-  color: var(--baps-text-light);
+/* Global */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-light);
+  color: var(--text-primary);
+  transition: background .3s, color .3s;
 }
 html.dark body {
-  background-color: var(--baps-bg-dark);
-  color: var(--baps-text-dark);
+  background: var(--bg-dark);
+  color: var(--text-secondary);
 }
 
-/* 3) Navbar */
+/* Navbar */
 .theme-nav {
-  background-color: var(--baps-accent);
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border);
+}
+html.dark .theme-nav {
+  background: var(--bg-dark);
+  border-bottom-color: var(--text-secondary);
+}
+.theme-nav h1 {
+  margin: 0;
+  font-weight: 500;
 }
 .theme-nav-btn {
-  border: 2px solid white;
   background: transparent;
-  color: white;
-  transition: background .2s, color .2s;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  transition: color .2s;
 }
 .theme-nav-btn:hover {
-  background-color: white;
-  color: var(--baps-accent);
+  color: var(--accent);
 }
 
-/* 4) Inputs & selects */
+/* Inputs & Selects */
 input, select {
-  border: 2px solid var(--baps-border);
-  background-color: white;
-  color: var(--baps-text-light);
-  transition: border .2s, box-shadow .2s;
+  width: 100%;
+  font-family: inherit;
+  background: var(--bg-light);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: .375rem;
+  padding: .75rem;
+  transition: border-color .2s, box-shadow .2s;
 }
 html.dark input, html.dark select {
-  background-color: #2A2A2A;
-  color: var(--baps-text-dark);
-}
-input::placeholder {
-  color: var(--baps-text-light);
-}
-html.dark input::placeholder {
-  color: var(--baps-text-dark);
+  background: var(--bg-dark);
+  color: var(--text-secondary);
+  border-color: var(--text-secondary);
 }
 input:focus, select:focus {
   outline: none;
-  border-color: var(--baps-accent);
-  box-shadow: 0 0 0 3px rgba(206, 137, 100, 0.4);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
 }
 
-/* 5) Themed buttons (main area) */
+/* Themed Buttons */
 .themed-btn {
-  border: 2px solid var(--baps-border);
+  font-family: inherit;
   background: transparent;
-  color: var(--baps-text-light);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
   padding: .5rem 1rem;
   border-radius: .375rem;
-  transition: background .2s, color .2s;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s;
 }
 html.dark .themed-btn {
-  color: var(--baps-text-dark);
+  border-color: var(--text-secondary);
+  color: var(--text-secondary);
 }
 .themed-btn:hover {
-  background-color: var(--baps-accent);
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
 }
 
-/* 6) Cards (result items) */
-.card {
-  background-color: white;
-  color: var(--baps-text-light);
+/* Cards (Results) */
+#results > div {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
   border-radius: .5rem;
   padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px var(--shadow);
+  transition: background .3s, border-color .3s;
 }
-html.dark .card {
-  background-color: #333;
-  color: var(--baps-text-dark);
+html.dark #results > div {
+  background: var(--bg-dark);
+  border-color: var(--text-secondary);
 }
-.card h3 {
-  color: var(--baps-accent) !important;
+#results h3 {
+  margin: 0 0 .5rem;
+  font-weight: 500;
 }
 
-/* 7) Modal backdrop & content */
+/* Modal */
 .theme-modal-bg {
   background: rgba(0,0,0,0.5);
 }
 .modal-content {
-  background-color: white;
-  color: var(--baps-text-light);
+  position: relative;
+  background: var(--bg-light);
+  border-radius: .5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px var(--shadow);
+  max-width: 32rem;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 html.dark .modal-content {
-  background-color: #2A2A2A;
-  color: var(--baps-text-dark);
+  background: var(--bg-dark);
 }
 .close-btn {
   position: absolute;
@@ -108,9 +134,14 @@ html.dark .modal-content {
   background: transparent;
   border: none;
   font-size: 1.25rem;
-  color: var(--baps-text-light);
+  color: var(--text-secondary);
   cursor: pointer;
+  transition: color .2s;
 }
-html.dark .close-btn {
-  color: var(--baps-text-dark);
+.close-btn:hover {
+  color: var(--accent);
 }
+
+/* Utility */
+p { margin: 0 0 .75rem; }
+button { font-family: inherit; }

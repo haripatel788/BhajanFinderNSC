@@ -4,20 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BAPS Bhajan Finder</title>
+  <!-- Inter font for clean typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <!-- Tailwind for layout & utilities -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Your custom theming -->
+  <!-- Custom minimal theming -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="transition-colors">
   <!-- NAVBAR -->
   <nav class="sticky top-0 z-10 theme-nav">
     <div class="max-w-4xl mx-auto flex items-center justify-between p-4">
-      <h1 class="text-2xl font-extrabold text-white">BAPS Bhajan Finder</h1>
+      <h1 class="text-2xl font-semibold">BAPS Bhajan Finder</h1>
       <div class="flex space-x-3">
-        <button id="randomBtn" class="p-2 rounded theme-nav-btn" title="Random">🔀</button>
-        <button id="favoritesToggle" class="p-2 rounded theme-nav-btn" title="Favorites">⭐</button>
-        <button id="darkToggle" class="p-2 rounded theme-nav-btn" title="Toggle theme">🌙</button>
+        <button id="randomBtn" class="theme-nav-btn" title="Random">🔀</button>
+        <button id="favoritesToggle" class="theme-nav-btn" title="Favorites">⭐</button>
+        <button id="darkToggle" class="theme-nav-btn" title="Toggle theme">🌙</button>
       </div>
     </div>
   </nav>
@@ -29,11 +33,11 @@
       id="searchBar"
       type="text"
       placeholder="Search by title, lyrics, or translation…"
-      class="w-full p-3 rounded"
+      class="rounded"
     />
 
     <!-- Category -->
-    <select id="categorySelect" class="w-full p-2 rounded">
+    <select id="categorySelect" class="rounded">
       <option>All</option>
     </select>
 
@@ -50,7 +54,7 @@
 
   <!-- DETAIL MODAL -->
   <div id="modal" class="fixed inset-0 hidden flex items-center justify-center theme-modal-bg p-4">
-    <div class="modal-content rounded-lg shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto p-6">
+    <div class="modal-content relative rounded-lg max-w-lg w-full max-h-[90vh] overflow-y-auto p-6">
       <button id="closeModal" class="close-btn">✖</button>
       <h2 id="modalTitle" class="text-xl font-semibold mb-4"></h2>
       <p id="modalLyrics" class="whitespace-pre-line mb-4"></p>
