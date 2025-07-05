@@ -1,45 +1,116 @@
+/* 1) Color variables */
+:root {
+  --baps-bg-light: #81D2C7;
+  --baps-bg-dark:  #416788;
+  --baps-text-light: #EEF1EF;
+  --baps-text-dark:  #CE8964;
+  --baps-border:    #7389AE;
+  --baps-accent:    #CE8964;
+}
+
+/* 2) Body background & text */
 body {
-  font-family: sans-serif;
-  background: #fdf6e3;
-  margin: 0;
-  padding: 2rem;
-  color: #333;
+  background-color: var(--baps-bg-light);
+  color: var(--baps-text-light);
+}
+html.dark body {
+  background-color: var(--baps-bg-dark);
+  color: var(--baps-text-dark);
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
+/* 3) Navbar */
+.theme-nav {
+  background-color: var(--baps-accent);
+}
+.theme-nav-btn {
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  transition: background .2s, color .2s;
+}
+.theme-nav-btn:hover {
+  background-color: white;
+  color: var(--baps-accent);
 }
 
-h1 {
-  text-align: center;
-  color: #b22222;
+/* 4) Inputs & selects */
+input, select {
+  border: 2px solid var(--baps-border);
+  background-color: white;
+  color: var(--baps-text-light);
+  transition: border .2s, box-shadow .2s;
+}
+html.dark input, html.dark select {
+  background-color: #2A2A2A;
+  color: var(--baps-text-dark);
+}
+input::placeholder {
+  color: var(--baps-text-light);
+}
+html.dark input::placeholder {
+  color: var(--baps-text-dark);
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--baps-accent);
+  box-shadow: 0 0 0 3px rgba(206, 137, 100, 0.4);
 }
 
-#searchBar {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  margin-bottom: 20px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
+/* 5) Themed buttons (main area) */
+.themed-btn {
+  border: 2px solid var(--baps-border);
+  background: transparent;
+  color: var(--baps-text-light);
+  padding: .5rem 1rem;
+  border-radius: .375rem;
+  transition: background .2s, color .2s;
+}
+html.dark .themed-btn {
+  color: var(--baps-text-dark);
+}
+.themed-btn:hover {
+  background-color: var(--baps-accent);
+  color: #fff;
 }
 
-.bhajan-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 20px;
+/* 6) Cards (result items) */
+.card {
+  background-color: white;
+  color: var(--baps-text-light);
+  border-radius: .5rem;
+  padding: 1rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-
-.bhajan-card h2 {
-  margin-top: 0;
+html.dark .card {
+  background-color: #333;
+  color: var(--baps-text-dark);
+}
+.card h3 {
+  color: var(--baps-accent) !important;
 }
 
-.bhajan-card a {
-  display: inline-block;
-  margin-top: 10px;
-  color: #1e90ff;
-  text-decoration: none;
+/* 7) Modal backdrop & content */
+.theme-modal-bg {
+  background: rgba(0,0,0,0.5);
+}
+.modal-content {
+  background-color: white;
+  color: var(--baps-text-light);
+}
+html.dark .modal-content {
+  background-color: #2A2A2A;
+  color: var(--baps-text-dark);
+}
+.close-btn {
+  position: absolute;
+  top: .75rem;
+  right: .75rem;
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--baps-text-light);
+  cursor: pointer;
+}
+html.dark .close-btn {
+  color: var(--baps-text-dark);
 }

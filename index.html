@@ -3,51 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bhajan Finder</title>
+  <title>BAPS Bhajan Finder</title>
+  <!-- Tailwind for layout & utilities -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Your custom theming -->
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors">
-  <nav class="flex items-center justify-between max-w-4xl mx-auto p-4">
-    <h1 class="text-3xl font-bold text-red-600 dark:text-red-400">🎵 Bhajan Finder</h1>
-    <div class="space-x-2">
-      <button id="randomBtn" class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">Random</button>
-      <button id="favoritesToggle" class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">Favorites</button>
-      <button id="darkToggle" class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded">
-        🌙/☀️
-      </button>
+<body class="transition-colors">
+  <!-- NAVBAR -->
+  <nav class="sticky top-0 z-10 theme-nav">
+    <div class="max-w-4xl mx-auto flex items-center justify-between p-4">
+      <h1 class="text-2xl font-extrabold text-white">BAPS Bhajan Finder</h1>
+      <div class="flex space-x-3">
+        <button id="randomBtn" class="p-2 rounded theme-nav-btn" title="Random">🔀</button>
+        <button id="favoritesToggle" class="p-2 rounded theme-nav-btn" title="Favorites">⭐</button>
+        <button id="darkToggle" class="p-2 rounded theme-nav-btn" title="Toggle theme">🌙</button>
+      </div>
     </div>
   </nav>
 
-  <div class="max-w-4xl mx-auto px-4">
+  <!-- MAIN CONTENT -->
+  <main class="max-w-4xl mx-auto p-4 space-y-6">
+    <!-- Search -->
     <input
       id="searchBar"
       type="text"
-      placeholder="Search by title, lyrics, or translation..."
-      class="w-full p-3 text-lg border-2 border-gray-300 dark:border-gray-600 rounded-lg mb-6 focus:outline-none focus:ring-2 focus:ring-red-500"
+      placeholder="Search by title, lyrics, or translation…"
+      class="w-full p-3 rounded"
     />
 
-    <div id="categoryFilters" class="mb-6 flex flex-wrap gap-2"></div>
-    <div id="results" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></div>
+    <!-- Category -->
+    <select id="categorySelect" class="w-full p-2 rounded">
+      <option>All</option>
+    </select>
 
-    <div class="flex justify-center items-center gap-4 mt-6">
-      <button id="prevPage" class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded">◀️ Prev</button>
+    <!-- Results Grid -->
+    <div id="results" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+
+    <!-- Pagination -->
+    <div class="flex items-center justify-center space-x-4">
+      <button id="prevPage" class="themed-btn">◀</button>
       <span id="pageInfo" class="font-medium"></span>
-      <button id="nextPage" class="px-3 py-1 bg-gray-300 dark:bg-gray-700 rounded">Next ▶️</button>
+      <button id="nextPage" class="themed-btn">▶</button>
     </div>
-  </div>
+  </main>
 
-  <!-- Detail Modal -->
-  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4">
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-xl w-full relative overflow-y-auto" style="max-height:90vh;">
-      <button id="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 dark:hover:text-gray-200">✖️</button>
-      <h2 id="modalTitle" class="text-2xl font-semibold text-red-600 dark:text-red-400 mb-4"></h2>
-      <p id="modalLyrics" class="whitespace-pre-line mb-4 text-gray-700 dark:text-gray-300"></p>
-      <p id="modalTranslation" class="whitespace-pre-line italic mb-4 text-gray-600 dark:text-gray-400"></p>
+  <!-- DETAIL MODAL -->
+  <div id="modal" class="fixed inset-0 hidden flex items-center justify-center theme-modal-bg p-4">
+    <div class="modal-content rounded-lg shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto p-6">
+      <button id="closeModal" class="close-btn">✖</button>
+      <h2 id="modalTitle" class="text-xl font-semibold mb-4"></h2>
+      <p id="modalLyrics" class="whitespace-pre-line mb-4"></p>
+      <p id="modalTranslation" class="whitespace-pre-line italic mb-4"></p>
       <div id="modalAudio" class="mb-4"></div>
-      <div class="flex gap-2">
-        <button id="favModal" class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">☆ Favorite</button>
-        <button id="downloadBtn" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">⬇️ Download</button>
-        <button id="copyBtn" class="px-3 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600">📋 Copy</button>
+      <div class="flex space-x-2">
+        <button id="favModal" class="themed-btn flex-1">☆ Favorite</button>
+        <button id="downloadBtn" class="themed-btn flex-1">⬇ Download</button>
+        <button id="copyBtn" class="themed-btn flex-1">📋 Copy</button>
       </div>
     </div>
   </div>
