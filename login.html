@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>BAPS Bhajan Finder — Login / Sign-Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-800 transition-colors">
+
+  <div class="bg-white dark:bg-gray-900 p-8 rounded shadow-md w-full max-w-md">
+    <h1 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-100 text-center">
+      BAPS Bhajan Finder
+    </h1>
+
+    <!-- SIGN UP -->
+    <section id="signup" class="mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-200">Sign Up</h2>
+      <label class="block mb-1 text-gray-600 dark:text-gray-400">First Name</label>
+      <input id="signupFirst" type="text" placeholder="First name"
+        class="w-full mb-3 px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded"/>
+
+      <label class="block mb-1 text-gray-600 dark:text-gray-400">Last Name</label>
+      <input id="signupLast" type="text" placeholder="Last name"
+        class="w-full mb-3 px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded"/>
+
+      <label class="block mb-1 text-gray-600 dark:text-gray-400">Username</label>
+      <input id="signupUser" type="text" placeholder="Username"
+        class="w-full mb-3 px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded"/>
+
+      <label class="block mb-1 text-gray-600 dark:text-gray-400">Password</label>
+      <input id="signupPass" type="password" placeholder="Password"
+        class="w-full mb-4 px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded"/>
+
+      <button id="signupBtn"
+        class="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded transition">
+        Create Account
+      </button>
+    </section>
+
+    <!-- SIGN IN -->
+    <section id="signin">
+      <h2 class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-200">Sign In</h2>
+      <label class="block mb-1 text-gray-600 dark:text-gray-400">Username</label>
+      <input id="loginUser" type="text" placeholder="Username"
+        class="w-full mb-3 px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded"/>
+
+      <label class="block mb-1 text-gray-600 dark:text-gray-400">Password</label>
+      <input id="loginPass" type="password" placeholder="Password"
+        class="w-full mb-4 px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded"/>
+
+      <button id="loginBtn"
+        class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition">
+        Sign In
+      </button>
+    </section>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+    import { getDatabase, ref, child, get, set } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCrRALzFPJipqB_fcY4FxjZlOz5cDUvgf0",
+      authDomain: "bhajanfinder.firebaseapp.com",
+      databaseURL: "https://bhajanfinder-default-rtdb.firebaseio.com",
+      projectId: "bhajanfinder",
+      storageBucket: "bhajanfinder.firebasestorage.app",
+      messagingSenderId: "645890810282",
+      appId: "1:645890810282:web:92042c774a3c00b6af4bd3",
+      measurementId: "G-R3WL0RMHSX"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db  = getDatabase(app);
+    const enc = str => encodeURIComponent(str);
+
+    // SIGN UP
+    document.getElementById("signupBtn").onclick = async () => {
+      const first = document.getElementById("signupFirst").value.trim();
+      const last  = document.getElementById("signupLast").value.trim();
+      const user  = document.getElementById("signupUser").value.trim();
+      const pass  = document.getElementById("signupPass").value;
+      if (!first || !last || !user || !pass) {
+        return alert("Fill in all sign-up fields.");
+      }
+      const dbRef = ref(db);
+      const snap  = await get(child(dbRef, `users/${user}`));
+      if (snap.exists()) {
+        return alert("Username already exists.");
+      }
+      await set(ref(db, `users/${user}`), {
+        firstName: first,
+        lastName:  last,
+        password:  pass,
+        favorites: []
+      });
+      window.location.href = `bhajan.html?user=${enc(user)}&first=${enc(first)}&last=${enc(last)}`;
+    };
+
+    // SIGN IN
+    document.getElementById("loginBtn").onclick = async () => {
+      const user = document.getElementById("loginUser").value.trim();
+      const pass = document.getElementById("loginPass").value;
+      if (!user || !pass) {
+        return alert("Enter both username & password.");
+      }
+      const dbRef = ref(db);
+      try {
+        const snap = await get(child(dbRef, `users/${user}`));
+        if (!snap.exists()) {
+          return alert("No such user. Please sign up first.");
+        }
+        const data = snap.val();
+        if (data.password !== pass) {
+          return alert("Incorrect password.");
+        }
+        window.location.href = `bhajan.html?user=${enc(user)}&first=${enc(data.firstName)}&last=${enc(data.lastName)}`;
+      } catch {
+        alert("Database error.");
+      }
+    };
+
+    // restore theme toggle state
+    if (localStorage.getItem("dark") === "true") {
+      document.documentElement.classList.add("dark");
+    }
+  </script>
+</body>
+</html>

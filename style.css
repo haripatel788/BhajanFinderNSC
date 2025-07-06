@@ -1,147 +1,79 @@
-/*────────────────────────────────────────────────────────────────────────────*/
-/* Minimalist Palette & Typography                                           */
-/*────────────────────────────────────────────────────────────────────────────*/
+/* Palette */
 :root {
-  --bg-light:       #FFFFFF;
-  --bg-dark:        #1F2937;
-  --text-primary:   #111827;
-  --text-secondary: #6B7280;
-  --accent:         #3B82F6;
-  --border:         #E5E7EB;
-  --shadow:         rgba(0,0,0,0.05);
+  --bg-light:    #ffffff;
+  --bg-dark:     #1f2937;
+  --text-light:  #111827;
+  --text-dark:   #f3f4f6;
+  --accent:      #4DB6AC;
 }
 
 /* Global */
 html, body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  height: 100%;
   background: var(--bg-light);
-  color: var(--text-primary);
+  color: var(--text-light);
   transition: background .3s, color .3s;
 }
 html.dark body {
   background: var(--bg-dark);
-  color: var(--text-secondary);
+  color: var(--text-dark);
 }
 
-/* Navbar */
-.theme-nav {
-  background: var(--bg-light);
-  border-bottom: 1px solid var(--border);
-}
-html.dark .theme-nav {
-  background: var(--bg-dark);
-  border-bottom-color: var(--text-secondary);
-}
-.theme-nav h1 {
-  margin: 0;
-  font-weight: 500;
-}
-.theme-nav-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  font-size: 1.25rem;
-  transition: color .2s;
-}
-.theme-nav-btn:hover {
-  color: var(--accent);
+/* Remove native arrow for custom dropdown */
+select.appearance-none {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
-/* Inputs & Selects */
-input, select {
-  width: 100%;
-  font-family: inherit;
-  background: var(--bg-light);
-  color: var(--text-primary);
-  border: 1px solid var(--border);
-  border-radius: .375rem;
-  padding: .75rem;
-  transition: border-color .2s, box-shadow .2s;
-}
-html.dark input, html.dark select {
-  background: var(--bg-dark);
-  color: var(--text-secondary);
-  border-color: var(--text-secondary);
-}
-input:focus, select:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
-}
-
-/* Themed Buttons */
-.themed-btn {
-  font-family: inherit;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-primary);
-  padding: .5rem 1rem;
-  border-radius: .375rem;
-  cursor: pointer;
-  transition: background .2s, border-color .2s, color .2s;
-}
-html.dark .themed-btn {
-  border-color: var(--text-secondary);
-  color: var(--text-secondary);
-}
-.themed-btn:hover {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-}
-
-/* Cards (Results) */
+/* Cards */
 #results > div {
   background: var(--bg-light);
-  border: 1px solid var(--border);
+  border: 1px solid #e5e7eb;
   border-radius: .5rem;
   padding: 1rem;
-  box-shadow: 0 2px 6px var(--shadow);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   transition: background .3s, border-color .3s;
 }
 html.dark #results > div {
-  background: var(--bg-dark);
-  border-color: var(--text-secondary);
-}
-#results h3 {
-  margin: 0 0 .5rem;
-  font-weight: 500;
+  background: #374151;
+  border-color: #4b5563;
 }
 
-/* Modal */
-.theme-modal-bg {
-  background: rgba(0,0,0,0.5);
-}
+/* Modal text inheritance */
 .modal-content {
+  color: var(--text-light);
   position: relative;
-  background: var(--bg-light);
-  border-radius: .5rem;
-  padding: 1.5rem;
-  box-shadow: 0 4px 12px var(--shadow);
-  max-width: 32rem;
-  max-height: 90vh;
-  overflow-y: auto;
 }
 html.dark .modal-content {
-  background: var(--bg-dark);
-}
-.close-btn {
-  position: absolute;
-  top: .75rem;
-  right: .75rem;
-  background: transparent;
-  border: none;
-  font-size: 1.25rem;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: color .2s;
-}
-.close-btn:hover {
-  color: var(--accent);
+  color: var(--text-dark);
 }
 
-/* Utility */
-p { margin: 0 0 .75rem; }
-button { font-family: inherit; }
+/* Button hover accent */
+button:hover {
+  border-color: var(--accent) !important;
+  background: var(--accent) !important;
+  color: #fff !important;
+}
+
+/* Inputs & selects */
+input, select {
+  font-family: inherit;
+  transition: border-color .2s, box-shadow .2s, background .3s, color .3s;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(77,182,172,0.3);
+}
+
+/* Scrollbar */
+body::-webkit-scrollbar {
+  width: 8px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0;
+  border-radius: 4px;
+}
