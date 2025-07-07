@@ -1,42 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>BAPS Bhajan Finder</title>
 
-  <!-- Enable class-based dark mode -->
-  <script>
-    tailwind.config = { darkMode: 'class' }
-  </script>
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com" defer></script>
   <link rel="stylesheet" href="style.css"/>
 </head>
-<body class="flex flex-col min-h-screen font-inter bg-gray-50 dark:bg-gray-900 transition-colors">
+<body class="flex flex-col min-h-screen font-inter bg-[#fdf9f5] text-[#343c6a]">
 
   <!-- NAVBAR -->
-  <nav class="flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+  <nav class="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 shadow-sm">
     <div class="flex items-center space-x-3">
       <img src="logo.png" alt="Logo" class="h-8 w-8"/>
-      <span class="text-xl font-semibold text-gray-900 dark:text-gray-100">BAPS Bhajan Finder</span>
+      <span class="text-xl font-semibold">BAPS Bhajan Finder</span>
     </div>
     <div class="flex items-center space-x-4">
-      <button id="darkToggle" class="p-2 rounded text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-        🌙
-      </button>
-      <a href="login.html#signup" class="text-gray-900 dark:text-gray-100 hover:underline">Sign Up</a>
-      <a href="login.html#signin" class="text-gray-900 dark:text-gray-100 hover:underline">Sign In</a>
+      <a href="login.html#signup" class="hover:underline">Sign Up</a>
+      <a href="login.html#signin" class="hover:underline">Sign In</a>
     </div>
   </nav>
 
   <!-- HERO -->
-  <header class="flex-1 flex flex-col items-center justify-center text-center px-6 py-16">
-    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-      Welcome to BAPS Bhajan Finder
-    </h1>
-    <p class="max-w-2xl mb-8 text-lg text-gray-700 dark:text-gray-300">
+  <header class="flex-1 flex flex-col items-center justify-center text-center px-6 py-16 bg-[#fdf9f5]">
+    <h1 class="text-5xl font-bold mb-4">Welcome to BAPS Bhajan Finder</h1>
+    <p class="max-w-2xl mb-8 text-lg">
       A project by the Coding Club at National Seva Camp (NSC), built to help devotees search, read, and favorite
       bhajans—complete with original lyrics, English translations, and embedded audio.
     </p>
@@ -47,63 +37,55 @@
   </header>
 
   <!-- CORE FEATURES -->
-  <section class="px-6 py-12 bg-gray-100 dark:bg-gray-800 transition-colors">
-    <h2 class="text-3xl font-semibold text-center mb-8 text-gray-900 dark:text-gray-100">Core Features</h2>
+  <section class="px-6 py-12 bg-[#fdf9f5]">
+    <h2 class="text-3xl font-semibold text-center mb-8">Core Features</h2>
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
-      <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-6 shadow">
-        <h3 class="text-2xl font-medium mb-2 text-gray-900 dark:text-gray-100">Search Bhajans</h3>
-        <p class="text-gray-700 dark:text-gray-300">
-          Instantly find bhajans by title, lyrics, or English translation.
-        </p>
+      <div class="bg-white border border-gray-200 rounded-lg p-6 shadow">
+        <h3 class="text-2xl font-medium mb-2">Search Bhajans</h3>
+        <p>Instantly find bhajans by title, lyrics, or English translation.</p>
       </div>
-      <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-6 shadow">
-        <h3 class="text-2xl font-medium mb-2 text-gray-900 dark:text-gray-100">Favorites</h3>
-        <p class="text-gray-700 dark:text-gray-300">
-          Save and revisit your favorite bhajans anytime.
-        </p>
+      <div class="bg-white border border-gray-200 rounded-lg p-6 shadow">
+        <h3 class="text-2xl font-medium mb-2">Favorites</h3>
+        <p>Save and revisit your favorite bhajans anytime.</p>
       </div>
-      <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-6 shadow">
-        <h3 class="text-2xl font-medium mb-2 text-gray-900 dark:text-gray-100">Dark / Light Mode</h3>
-        <p class="text-gray-700 dark:text-gray-300">
-          Comfortable viewing day or night with theme toggle.
-        </p>
+      <div class="bg-white border border-gray-200 rounded-lg p-6 shadow">
+        <h3 class="text-2xl font-medium mb-2">Clean UI</h3>
+        <p>Fully responsive and accessible design for all users.</p>
       </div>
-      <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-6 shadow">
-        <h3 class="text-2xl font-medium mb-2 text-gray-900 dark:text-gray-100">Realtime DB</h3>
-        <p class="text-gray-700 dark:text-gray-300">
-          Your data syncs instantly via Firebase Realtime Database.
-        </p>
+      <div class="bg-white border border-gray-200 rounded-lg p-6 shadow">
+        <h3 class="text-2xl font-medium mb-2">Realtime DB</h3>
+        <p>Your data syncs instantly via Firebase Realtime Database.</p>
       </div>
     </div>
   </section>
 
   <!-- HOW IT WORKS -->
-  <section class="px-6 py-12">
-    <h2 class="text-3xl font-semibold text-center mb-8 text-gray-900 dark:text-gray-100">How It Works</h2>
-    <div class="space-y-8 max-w-3xl mx-auto text-gray-700 dark:text-gray-300">
+  <section class="px-6 py-12 bg-[#fdf9f5]">
+    <h2 class="text-3xl font-semibold text-center mb-8">How It Works</h2>
+    <div class="space-y-8 max-w-3xl mx-auto">
       <div class="flex items-start space-x-4">
-        <div class="text-green-600 dark:text-green-400 text-2xl font-bold">1.</div>
+        <div class="text-green-600 text-2xl font-bold">1.</div>
         <p><strong>Sign Up / Sign In:</strong> Create or access your account to manage favorites securely.</p>
       </div>
       <div class="flex items-start space-x-4">
-        <div class="text-green-600 dark:text-green-400 text-2xl font-bold">2.</div>
+        <div class="text-green-600 text-2xl font-bold">2.</div>
         <p><strong>Search & Discover:</strong> Use the search bar to find bhajans by title, lyrics, or translation.</p>
       </div>
       <div class="flex items-start space-x-4">
-        <div class="text-green-600 dark:text-green-400 text-2xl font-bold">3.</div>
+        <div class="text-green-600 text-2xl font-bold">3.</div>
         <p><strong>Favorite & Save:</strong> Click the star icon to favorite; stored just for you in the cloud.</p>
       </div>
       <div class="flex items-start space-x-4">
-        <div class="text-green-600 dark:text-green-400 text-2xl font-bold">4.</div>
+        <div class="text-green-600 text-2xl font-bold">4.</div>
         <p><strong>Enjoy Anywhere:</strong> Access your personalized list from any device, anytime.</p>
       </div>
     </div>
   </section>
 
   <!-- ABOUT NSC -->
-  <section class="px-6 py-12 bg-gray-100 dark:bg-gray-800 transition-colors">
-    <h2 class="text-3xl font-semibold text-center mb-6 text-gray-900 dark:text-gray-100">About National Seva Camp</h2>
-    <p class="max-w-3xl mx-auto text-center text-gray-700 dark:text-gray-300">
+  <section class="px-6 py-12 bg-[#fdf9f5]">
+    <h2 class="text-3xl font-semibold text-center mb-6">About National Seva Camp</h2>
+    <p class="max-w-3xl mx-auto text-center">
       National Seva Camp (NSC) brings together coding enthusiasts from across regions to build practical,
       community-focused projects. This Bhajan Finder is our Coding Club’s flagship initiative for 2025,
       aiming to blend technology with devotional service.
@@ -111,70 +93,49 @@
   </section>
 
   <!-- MEET THE TEAM -->
-  <section class="px-6 py-12">
-    <h2 class="text-3xl font-semibold text-center mb-8 text-gray-900 dark:text-gray-100">Meet the Team</h2>
+  <section class="px-6 py-12 bg-[#fdf9f5]">
+    <h2 class="text-3xl font-semibold text-center mb-8">Meet the Team</h2>
     <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
-      <!-- Team Member -->
-      <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-6 text-center shadow">
-        <img src="https://via.placeholder.com/100" alt="Member photo" class="mx-auto rounded-full mb-4"/>
-        <h3 class="text-xl font-medium text-gray-900 dark:text-gray-100">Hari Patel</h3>
-        <p class="text-gray-600 dark:text-gray-300">Lead Developer</p>
+      <div class="bg-white border border-gray-200 rounded-lg p-6 text-center shadow">
+        <img src="https://via.placeholder.com/100" alt="Hari Patel" class="mx-auto rounded-full mb-4"/>
+        <h3 class="text-xl font-medium">Hari Patel</h3>
+        <p>Lead Developer</p>
       </div>
-      <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-6 text-center shadow">
-        <img src="https://via.placeholder.com/100" alt="Member photo" class="mx-auto rounded-full mb-4"/>
-        <h3 class="text-xl font-medium text-gray-900 dark:text-gray-100">Aaryan Patel</h3>
-        <p class="text-gray-600 dark:text-gray-300">UI/UX Designer</p>
+      <div class="bg-white border border-gray-200 rounded-lg p-6 text-center shadow">
+        <img src="https://via.placeholder.com/100" alt="Aaryan Patel" class="mx-auto rounded-full mb-4"/>
+        <h3 class="text-xl font-medium">Aaryan Patel</h3>
+        <p>UI/UX Designer</p>
       </div>
-      <!-- Add more cards as needed -->
+      <!-- Add more members if needed -->
     </div>
   </section>
 
-  <!-- CONTACT FORM -->
-  <section class="px-6 py-12 bg-gray-100 dark:bg-gray-800 transition-colors">
-    <h2 class="text-3xl font-semibold text-center mb-6 text-gray-900 dark:text-gray-100">Get in Touch</h2>
-    <form class="max-w-lg mx-auto space-y-4 text-gray-700 dark:text-gray-300">
+  <!-- CONTACT FORM
+  <section class="px-6 py-12 bg-[#fdf9f5]">
+    <h2 class="text-3xl font-semibold text-center mb-6">Get in Touch</h2>
+    <form class="max-w-lg mx-auto space-y-4">
       <div>
         <label class="block mb-1">Name</label>
-        <input type="text" placeholder="Your name"
-               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded text-gray-900 dark:text-gray-100"/>
+        <input type="text" placeholder="Your name" class="w-full"/>
       </div>
       <div>
         <label class="block mb-1">Email</label>
-        <input type="email" placeholder="you@example.com"
-               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded text-gray-900 dark:text-gray-100"/>
+        <input type="email" placeholder="you@example.com" class="w-full"/>
       </div>
       <div>
         <label class="block mb-1">Message</label>
-        <textarea rows="4" placeholder="How can we help?"
-                  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded text-gray-900 dark:text-gray-100"></textarea>
+        <textarea rows="4" placeholder="How can we help?" class="w-full"></textarea>
       </div>
       <button type="submit"
               class="w-full px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition">
         Send Message
       </button>
     </form>
-  </section>
+  </section> -->
 
   <!-- FOOTER -->
-  <footer class="mt-auto px-6 py-6 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 text-center text-gray-600 dark:text-gray-400">
+  <footer class="mt-auto px-6 py-6 bg-white border-t border-gray-200 text-center text-gray-600">
     © 2025 BAPS Bhajan Finder — Developed by NSC Coding Club
   </footer>
-
-  <!-- DARK MODE TOGGLE SCRIPT -->
-  <script>
-    const darkToggle = document.getElementById("darkToggle");
-    function updateToggleEmoji() {
-      darkToggle.textContent = document.documentElement.classList.contains("dark") ? "☀️" : "🌙";
-    }
-    darkToggle.addEventListener("click", () => {
-      document.documentElement.classList.toggle("dark");
-      localStorage.setItem("dark", document.documentElement.classList.contains("dark"));
-      updateToggleEmoji();
-    });
-    if (localStorage.getItem("dark") === "true") {
-      document.documentElement.classList.add("dark");
-    }
-    updateToggleEmoji();
-  </script>
 </body>
 </html>

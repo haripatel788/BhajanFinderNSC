@@ -1,71 +1,68 @@
-/* Palette */
+/* ---------------------------------------------------
+   PALETTE
+--------------------------------------------------- */
 :root {
-  --bg-light:    #ffffff;
-  --bg-dark:     #1f2937;
-  --text-light:  #111827;
-  --text-dark:   #f3f4f6;
-  --accent:      #4DB6AC;
+  --bg-main:   #fdf9f5;
+  --bg-card:   #ffffff;
+  --text-main: #343c6a;
+  --accent:    #4DB6AC;
 }
 
-/* Global */
-html, body {
+/* ---------------------------------------------------
+   GLOBAL RESET & BOX-SIZING
+--------------------------------------------------- */
+* {
   margin: 0;
   padding: 0;
-  height: 100%;
-  background: var(--bg-light);
-  color: var(--text-light);
-  transition: background .3s, color .3s;
-}
-html.dark body {
-  background: var(--bg-dark);
-  color: var(--text-dark);
+  box-sizing: border-box;
 }
 
-/* Remove native arrow for custom dropdown */
-select.appearance-none {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+/* ---------------------------------------------------
+   TYPOGRAPHY
+--------------------------------------------------- */
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  transition: background 0.3s, color 0.3s;
 }
 
-/* Cards */
+/* ---------------------------------------------------
+   CARDS, MODALS, INPUTS, BUTTONS, ETC.
+--------------------------------------------------- */
 #results > div {
-  background: var(--bg-light);
+  background: var(--bg-card);
   border: 1px solid #e5e7eb;
   border-radius: .5rem;
   padding: 1rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   transition: background .3s, border-color .3s;
 }
-html.dark #results > div {
-  background: #374151;
-  border-color: #4b5563;
-}
 
-/* Modal text inheritance */
 .modal-content {
-  color: var(--text-light);
+  color: var(--text-main);
   position: relative;
 }
-html.dark .modal-content {
-  color: var(--text-dark);
-}
 
-/* Button hover accent */
 button:hover {
   border-color: var(--accent) !important;
   background: var(--accent) !important;
   color: #fff !important;
 }
 
-/* Inputs & selects */
-input, select {
+input, select, textarea {
   font-family: inherit;
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
   transition: border-color .2s, box-shadow .2s, background .3s, color .3s;
 }
-input:focus, select:focus {
+
+input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: var(--accent) !important;
+  border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(77,182,172,0.3);
 }
 

@@ -1,0 +1,82 @@
+:root {
+    --bg-main:    #fdf9f5;
+    --bg-card:    #ffffff;
+    --text-main:  #343c6a;
+    --accent:     #4DB6AC;
+  }
+  
+  /* Global */
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: var(--bg-main);
+    color: var(--text-main);
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  /* Remove native arrow for custom dropdown */
+  select.appearance-none {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+  /* Sidebar + header */
+  aside,
+  header {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-color: #e5e7eb !important;
+  }
+  
+  /* Nav & buttons */
+  button,
+  select,
+  input {
+    color: var(--text-main) !important;
+    background-color: var(--bg-card) !important;
+    border-color: #d1d5db !important;
+  }
+  
+  button:hover {
+    border-color: var(--accent) !important;
+    background-color: var(--accent) !important;
+    color: white !important;
+  }
+  
+  /* Inputs & selects focus state */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px rgba(77,182,172,0.3);
+  }
+  
+  /* Bhajan Cards */
+  #results > div {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid #e5e7eb;
+    border-radius: .5rem;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: background .3s, border-color .3s;
+  }
+  
+  /* Modal */
+  .modal-content {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+  }
+  
+  /* Scrollbar */
+  body::-webkit-scrollbar {
+    width: 8px;
+  }
+  body::-webkit-scrollbar-thumb {
+    background-color: #cbd5e0;
+    border-radius: 4px;
+  }
+  

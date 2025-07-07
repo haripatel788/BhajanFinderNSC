@@ -38,7 +38,6 @@ const resultsEl     = document.getElementById("results");
 const pageInfo      = document.getElementById("pageInfo");
 const prevPageBtn   = document.getElementById("prevPage");
 const nextPageBtn   = document.getElementById("nextPage");
-const darkToggle    = document.getElementById("darkToggle");
 const showFavsBtn   = document.getElementById("showFavsBtn");
 const navHome       = document.getElementById("navHome");
 const navRandom     = document.getElementById("navRandom");
@@ -62,7 +61,6 @@ const copyBtn       = document.getElementById("copyBtn");
   if (!username || !firstName || !lastName) {
     return window.location.replace("index.html");
   }
-  // persist
   localStorage.setItem("bf_user",  username);
   localStorage.setItem("bf_first", firstName);
   localStorage.setItem("bf_last",  lastName);
@@ -77,21 +75,6 @@ logoutBtn.onclick = () => {
   localStorage.removeItem("bf_last");
   window.location.replace("index.html");
 };
-
-// —— Theme toggle & emoji ——
-function updateToggleEmoji() {
-  darkToggle.textContent = document.documentElement.classList.contains("dark")
-    ? "☀️" : "🌙";
-}
-darkToggle.onclick = () => {
-  document.documentElement.classList.toggle("dark");
-  localStorage.setItem("dark", document.documentElement.classList.contains("dark"));
-  updateToggleEmoji();
-};
-if (localStorage.getItem("dark")==="true") {
-  document.documentElement.classList.add("dark");
-}
-updateToggleEmoji();
 
 // —— Fetch user’s favorites from DB ——
 function loadFavorites() {
@@ -144,14 +127,19 @@ function buildDatalist() {
 
 function render() {
   resultsEl.innerHTML = "";
-  const start = (page-1)*perPage, slice = filtered.slice(start, start+perPage);
+  const start = (page-1)*perPage;
+  const slice = filtered.slice(start, start+perPage);
+
   if (!slice.length) {
-    resultsEl.innerHTML = `<p class="col-span-3 text-center text-gray-500">No bhajans found.</p>`;
+    resultsEl.innerHTML = `<p class="col-span-3 text-center text-[#6b7280]">No bhajans found.</p>`;
   } else {
     slice.forEach(b => {
       const isFav = favorites.includes(b["Bhajan Name"]);
       const card = document.createElement("div");
-      card.innerHTML=`
+      // ← Added Tailwind styling so cards actually appear!
+      card.className = "bg-white border border-gray-200 rounded-lg p-6 shadow";
+
+      card.innerHTML = `
         <div class="flex justify-between items-start mb-2">
           <h3 class="font-medium">${b["Bhajan Name"]}</h3>
           <button class="fav-star text-xl">${isFav?'★':'☆'}</button>
@@ -165,6 +153,7 @@ function render() {
       resultsEl.appendChild(card);
     });
   }
+
   pageInfo.textContent = `${page} / ${Math.ceil(filtered.length / perPage)}`;
 }
 
@@ -209,21 +198,21 @@ function toggleFavorite(name) {
 
 // —— Modal controls ——
 function openModal(b) {
-  modalTitle.textContent   = b["Bhajan Name"];
-  modalLyrics.textContent  = b.Lyrics;
-  modalTrans.textContent   = b["English Translation"];
-  modalAudio.innerHTML     =
+  modalTitle.textContent  = b["Bhajan Name"];
+  modalLyrics.textContent = b.Lyrics;
+  modalTrans.textContent  = b["English Translation"];
+  modalAudio.innerHTML    =
     `<iframe class="w-full h-40" src="${b["YouTube Link"].replace("watch?v=","embed/")}" frameborder="0" allowfullscreen></iframe>`;
-  favModalBtn.textContent  = favorites.includes(b["Bhajan Name"]) ? "★ Unfavorite" : "☆ Favorite";
-  favModalBtn.onclick      = ()=>toggleFavorite(b["Bhajan Name"]);
-  dlBtn.onclick            = ()=>{
+  favModalBtn.textContent = favorites.includes(b["Bhajan Name"]) ? "★ Unfavorite" : "☆ Favorite";
+  favModalBtn.onclick     = ()=>toggleFavorite(b["Bhajan Name"]);
+  dlBtn.onclick           = ()=>{
     const blob = new Blob([`${b["Bhajan Name"]}\n\n${b.Lyrics}\n\n${b["English Translation"]}`], {type:"text/plain"});
     const a = document.createElement("a");
     a.href     = URL.createObjectURL(blob);
     a.download = `${b["Bhajan Name"]}.txt`;
     a.click();
   };
-  copyBtn.onclick          = ()=>navigator.clipboard.writeText(
+  copyBtn.onclick         = ()=>navigator.clipboard.writeText(
     `${b["Bhajan Name"]}\n\n${b.Lyrics}\n\n${b["English Translation"]}`
   );
   modal.classList.remove("hidden");
