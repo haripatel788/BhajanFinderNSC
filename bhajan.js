@@ -2,12 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
 import { getAnalytics }  from "https://www.gstatic.com/firebasejs/10.3.1/firebase-analytics.js";
 import {
-  getDatabase,
-  ref,
-  onValue,
-  set,
-  child,
-  get
+  getDatabase, ref, onValue, set, child, get
 } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-database.js";
 
 // —— Firebase config + init ——
@@ -21,9 +16,9 @@ const firebaseConfig = {
   appId: "1:645890810282:web:92042c774a3c00b6af4bd3",
   measurementId: "G-R3WL0RMHSX"
 };
-const app       = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 getAnalytics(app);
-const db        = getDatabase(app);
+const db  = getDatabase(app);
 
 // —— Globals & refs ——
 let bhajans = [], filtered = [], page = 1, perPage = 12;
@@ -51,24 +46,21 @@ const favModalBtn   = document.getElementById("favModal");
 const dlBtn         = document.getElementById("downloadBtn");
 const copyBtn       = document.getElementById("copyBtn");
 
-// —— Parse URL params or fallback to localStorage ——
+// —— Parse URL params or fallback to guest/login ——
 (function loadUser() {
-  const params = new URLSearchParams(window.location.search);
-  username  = params.get("user")  || localStorage.getItem("bf_user");
-  firstName = params.get("first") || localStorage.getItem("bf_first");
-  lastName  = params.get("last")  || localStorage.getItem("bf_last");
+  const params   = new URLSearchParams(window.location.search);
+  username      = params.get("user")  || "guest";
+  firstName     = params.get("first") || "";
+  lastName      = params.get("last")  || "";
 
-  if (!username || !firstName || !lastName) {
-    return window.location.replace("index.html");
+  if (username === "guest") {
+    userGreeting.textContent = "Welcome, Guest!";
+  } else {
+    userGreeting.textContent = `Jay Swaminarayan, ${firstName} ${lastName}`;
   }
-  localStorage.setItem("bf_user",  username);
-  localStorage.setItem("bf_first", firstName);
-  localStorage.setItem("bf_last",  lastName);
-
-  userGreeting.textContent = `Jay Swaminarayan, ${firstName} ${lastName}`;
 })();
 
-// —— Logout clears and back to login ——
+// —— Logout (clears storage + redirect) ——
 logoutBtn.onclick = () => {
   localStorage.removeItem("bf_user");
   localStorage.removeItem("bf_first");
@@ -76,59 +68,61 @@ logoutBtn.onclick = () => {
   window.location.replace("index.html");
 };
 
-// —— Fetch user’s favorites from DB ——
+// —— Fetch favorites ——
 function loadFavorites() {
-  onValue(ref(db, `users/${username}/favorites`), snap => {
-    favorites = snap.val() || [];
+  if (username === "guest") {
+    favorites = [];
     render();
-  });
+  } else {
+    onValue(ref(db, `users/${username}/favorites`), snap => {
+      favorites = snap.val() || [];
+      render();
+    });
+  }
 }
 
-// —— Main init ——
+// —— Init app ——
 async function initApp() {
   await fetchBhajans();
   setupListeners();
   loadFavorites();
 }
 
-// —— Fetch bhajans JSON ——
+// —— Load bhajans JSON ——
 async function fetchBhajans() {
-  try {
-    const res = await fetch("bhajans1.json");
-    if (!res.ok) throw new Error("Failed to load bhajans");
-    bhajans  = await res.json();
-    filtered = [...bhajans];
-    buildCategorySelect();
-    buildDatalist();
-    render();
-  } catch (e) {
-    resultsEl.innerHTML = `<p class="col-span-3 text-center text-red-500">${e.message}</p>`;
-  }
+  const res = await fetch("bhajans1.json");
+  bhajans  = res.ok ? await res.json() : [];
+  filtered = [...bhajans];
+  buildCategorySelect();
+  buildDatalist();
+  render();
 }
 
-// —— UI builders & renderers ——
+// —— UI Builders ——
 function buildCategorySelect() {
-  const cats = [...new Set(bhajans.map(b=>b.Category||"Uncategorized"))];
+  const cats = [...new Set(bhajans.map(b => b.Category || "Uncategorized"))];
   catSelect.innerHTML = `<option>All Categories</option>` +
-    cats.map(c=>`<option>${c}</option>`).join("");
+    cats.map(c => `<option>${c}</option>`).join("");
   catSelect.onchange = () => {
-    filtered = catSelect.value==="All Categories"
+    filtered = catSelect.value === "All Categories"
       ? [...bhajans]
-      : bhajans.filter(b=>(b.Category||"")===catSelect.value);
-    page = 1; render();
+      : bhajans.filter(b => (b.Category || "") === catSelect.value);
+    page = 1;
+    render();
   };
 }
 
 function buildDatalist() {
   dataList.innerHTML = bhajans
-    .map(b=>`<option value="${b["Bhajan Name"]}">`)
+    .map(b => `<option value="${b["Bhajan Name"]}">`)
     .join("");
 }
 
+// —— Render grid ——
 function render() {
   resultsEl.innerHTML = "";
-  const start = (page-1)*perPage;
-  const slice = filtered.slice(start, start+perPage);
+  const start = (page - 1) * perPage;
+  const slice = filtered.slice(start, start + perPage);
 
   if (!slice.length) {
     resultsEl.innerHTML = `<p class="col-span-3 text-center text-[#6b7280]">No bhajans found.</p>`;
@@ -136,13 +130,11 @@ function render() {
     slice.forEach(b => {
       const isFav = favorites.includes(b["Bhajan Name"]);
       const card = document.createElement("div");
-      // ← Added Tailwind styling so cards actually appear!
       card.className = "bg-white border border-gray-200 rounded-lg p-6 shadow";
-
       card.innerHTML = `
         <div class="flex justify-between items-start mb-2">
           <h3 class="font-medium">${b["Bhajan Name"]}</h3>
-          <button class="fav-star text-xl">${isFav?'★':'☆'}</button>
+          <button class="fav-star text-xl">${isFav ? '★' : '☆'}</button>
         </div>
         <p class="text-sm mb-1">${b.Lyrics.slice(0,80).replace(/\n/g,' ')}…</p>
         <p class="italic text-xs mb-3">${b["English Translation"].slice(0,80).replace(/\n/g,' ')}…</p>
@@ -157,66 +149,98 @@ function render() {
   pageInfo.textContent = `${page} / ${Math.ceil(filtered.length / perPage)}`;
 }
 
-// —— Pagination, search, favorites, random, home ——
+// —— Event listeners ——
 function setupListeners() {
-  prevPageBtn .onclick = ()=>{ if(page>1){page--; render();}};
-  nextPageBtn .onclick = ()=>{ if(page*perPage<filtered.length){page++;render();}};
-  searchBar   .oninput = e=>{
+  prevPageBtn.onclick = () => { if (page > 1) { page--; render(); } };
+  nextPageBtn.onclick = () => { if (page * perPage < filtered.length) { page++; render(); } };
+  searchBar.oninput = e => {
     const q = e.target.value.toLowerCase();
-    filtered = bhajans.filter(b=>
+    filtered = bhajans.filter(b =>
       b["Bhajan Name"].toLowerCase().includes(q) ||
       b.Lyrics.toLowerCase().includes(q) ||
       b["English Translation"].toLowerCase().includes(q)
     );
-    page=1; render();
-  };
-  showFavsBtn .onclick = ()=>{
-    filtered = favorites.length
-      ? bhajans.filter(b=>favorites.includes(b["Bhajan Name"]))
-      : [...bhajans];
-    page=1; render();
-  };
-  navRandom   .onclick = ()=>{
-    const r = bhajans[Math.floor(Math.random()*bhajans.length)];
-    openModal(r);
-  };
-  navHome     .onclick = ()=>{
-    filtered = [...bhajans];
     page = 1;
     render();
   };
-  closeModalBtn.onclick = ()=>modal.classList.add("hidden");
+  showFavsBtn.onclick = () => {
+    filtered = favorites.length
+      ? bhajans.filter(b => favorites.includes(b["Bhajan Name"]))
+      : [...bhajans];
+    page = 1;
+    render();
+  };
+  navRandom.onclick = () => {
+    const r = bhajans[Math.floor(Math.random() * bhajans.length)];
+    openModal(r);
+  };
+  navHome.onclick = () => { filtered = [...bhajans]; page = 1; render(); };
+  closeModalBtn.onclick = () => modal.classList.add("hidden");
 }
 
-// —— Toggle & persist favorite in DB ——
+// —— Toggle favorite (now updates modal & grid) ——
 function toggleFavorite(name) {
-  const updated = favorites.includes(name)
-    ? favorites.filter(x=>x!==name)
-    : [...favorites, name];
-  set(ref(db, `users/${username}/favorites`), updated);
+  if (username === "guest") {
+    alert("Please sign in to favorite bhajans.");
+    return;
+  }
+
+  // compute new list
+  if (favorites.includes(name)) {
+    favorites = favorites.filter(x => x !== name);
+  } else {
+    favorites = [...favorites, name];
+  }
+
+  // persist to Firebase
+  set(ref(db, `users/${username}/favorites`), favorites);
+
+  // update modal button label
+  favModalBtn.textContent = favorites.includes(name) ? "★ Unfavorite" : "☆ Favorite";
+
+  // update the star in the grid
+  document.querySelectorAll("#results .fav-star").forEach(btn => {
+    const cardName = btn.closest("div").querySelector("h3").textContent;
+    if (cardName === name) {
+      btn.textContent = favorites.includes(name) ? "★" : "☆";
+    }
+  });
 }
 
 // —— Modal controls ——
 function openModal(b) {
-  modalTitle.textContent  = b["Bhajan Name"];
-  modalLyrics.textContent = b.Lyrics;
-  modalTrans.textContent  = b["English Translation"];
-  modalAudio.innerHTML    =
+  modalTitle.textContent   = b["Bhajan Name"];
+  modalLyrics.textContent  = b.Lyrics;
+  modalTrans.textContent   = b["English Translation"];
+  modalAudio.innerHTML     =
     `<iframe class="w-full h-40" src="${b["YouTube Link"].replace("watch?v=","embed/")}" frameborder="0" allowfullscreen></iframe>`;
+
+  // Setup favorite button
   favModalBtn.textContent = favorites.includes(b["Bhajan Name"]) ? "★ Unfavorite" : "☆ Favorite";
-  favModalBtn.onclick     = ()=>toggleFavorite(b["Bhajan Name"]);
-  dlBtn.onclick           = ()=>{
-    const blob = new Blob([`${b["Bhajan Name"]}\n\n${b.Lyrics}\n\n${b["English Translation"]}`], {type:"text/plain"});
+  favModalBtn.onclick     = () => toggleFavorite(b["Bhajan Name"]);
+
+  // Download button
+  dlBtn.onclick = () => {
+    const blob = new Blob(
+      [`${b["Bhajan Name"]}\n\n${b.Lyrics}\n\n${b["English Translation"]}`],
+      { type: "text/plain" }
+    );
     const a = document.createElement("a");
     a.href     = URL.createObjectURL(blob);
     a.download = `${b["Bhajan Name"]}.txt`;
     a.click();
   };
-  copyBtn.onclick         = ()=>navigator.clipboard.writeText(
-    `${b["Bhajan Name"]}\n\n${b.Lyrics}\n\n${b["English Translation"]}`
-  );
+
+  // Copy button
+  copyBtn.onclick = () => {
+    navigator.clipboard.writeText(
+      `${b["Bhajan Name"]}\n\n${b.Lyrics}\n\n${b["English Translation"]}`
+    );
+    alert("Copied to clipboard!");
+  };
+
   modal.classList.remove("hidden");
 }
 
-// —— Kick off the app! ——
+// —— Kick off ——
 document.addEventListener("DOMContentLoaded", initApp);

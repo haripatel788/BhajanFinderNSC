@@ -1,76 +1,75 @@
-/* ---------------------------------------------------
-   PALETTE
---------------------------------------------------- */
 :root {
-  --bg-main:   #fdf9f5;
-  --bg-card:   #ffffff;
-  --text-main: #343c6a;
-  --accent:    #4DB6AC;
+  --bg-main:    #fdf9f5;
+  --bg-card:    #ffffff;
+  --text-main:  #343c6a;
+  --text-muted: #6b7280;
+  --accent:     #4DB6AC;
 }
 
-/* ---------------------------------------------------
-   GLOBAL RESET & BOX-SIZING
---------------------------------------------------- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Global reset & base */
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body {
+  height:100%; background:var(--bg-main); color:var(--text-main);
+  font-family:'Inter',sans-serif; transition:background .3s,color .3s;
 }
 
-/* ---------------------------------------------------
-   TYPOGRAPHY
---------------------------------------------------- */
-body {
-  background: var(--bg-main);
-  color: var(--text-main);
-  font-family: 'Inter', sans-serif;
-  transition: background 0.3s, color 0.3s;
+/* Links */
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+/* Panels (nav, aside, header, footer, cards) */
+nav,aside,header,footer,div.bg-white {
+  background:var(--bg-card)!important; color:var(--text-main)!important;
+  border-color:#e5e7eb!important;
 }
 
-/* ---------------------------------------------------
-   CARDS, MODALS, INPUTS, BUTTONS, ETC.
---------------------------------------------------- */
-#results > div {
-  background: var(--bg-card);
-  border: 1px solid #e5e7eb;
-  border-radius: .5rem;
-  padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: background .3s, border-color .3s;
+/* Buttons */
+button {
+  background:var(--bg-card); color:var(--text-main);
+  border:1px solid #d1d5db; border-radius:.375rem;
+  padding:.5rem; cursor:pointer;
+  transition:background .2s,border-color .2s,color .2s;
 }
-
-.modal-content {
-  color: var(--text-main);
-  position: relative;
-}
-
 button:hover {
-  border-color: var(--accent) !important;
-  background: var(--accent) !important;
-  color: #fff !important;
+  background:var(--accent)!important;
+  border-color:var(--accent)!important;
+  color:#fff!important;
 }
 
-input, select, textarea {
-  font-family: inherit;
-  background: var(--bg-card);
-  color: var(--text-main);
-  border: 1px solid #ccc;
-  padding: 0.5rem;
-  border-radius: 0.375rem;
-  transition: border-color .2s, box-shadow .2s, background .3s, color .3s;
+/* Inputs / selects / textareas */
+input,select,textarea {
+  background:var(--bg-card); color:var(--text-main);
+  border:1px solid #d1d5db; border-radius:.375rem;
+  padding:.5rem; width:100%;
+  transition:border-color .2s,box-shadow .2s;
+}
+input:focus,select:focus,textarea:focus {
+  outline:none; border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(77,182,172,0.3);
+}
+/* remove native arrow */
+select.appearance-none {
+  -webkit-appearance:none; -moz-appearance:none; appearance:none;
 }
 
-input:focus, select:focus, textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(77,182,172,0.3);
+/* Cards */
+#results > div {
+  background:var(--bg-card); color:var(--text-main);
+  border:1px solid #e5e7eb; border-radius:.5rem;
+  padding:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  transition:background .3s,border-color .3s;
 }
+
+/* Modal */
+.modal-content {
+  background:var(--bg-card); color:var(--text-main);
+}
+
+/* Typography helper */
+.text-muted { color:var(--text-muted); }
 
 /* Scrollbar */
-body::-webkit-scrollbar {
-  width: 8px;
-}
+body::-webkit-scrollbar { width:8px; }
 body::-webkit-scrollbar-thumb {
-  background-color: #cbd5e0;
-  border-radius: 4px;
+  background:#cbd5e0; border-radius:4px;
 }

@@ -9,106 +9,120 @@
 </head>
 <body class="flex h-screen font-inter bg-[#fdf9f5] text-[#343c6a]">
 
-  <!-- SIDEBAR -->
-  <aside class="w-64 bg-[#ffffff] border-r border-gray-300 flex flex-col">
-    <div class="p-6 border-b border-gray-300">
-      <h1 class="text-2xl font-semibold">BAPS Bhajan Finder</h1>
+  <!-- MOBILE TOPBAR -->
+  <header class="md:hidden flex items-center justify-between p-4 bg-[#ffffff] border-b border-gray-300">
+    <button id="mobileMenuBtn" class="p-2 rounded border">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <h1 class="text-lg font-semibold">BAPS Bhajan Finder</h1>
+    <div id="authLinksMobile" class="space-x-2">
+      <a href="login.html#signin" class="text-sm hover:underline">Sign In</a>
+      <a href="login.html#signup" class="text-sm hover:underline">Sign Up</a>
     </div>
-    <nav class="flex-1 p-4 space-y-1">
-      <button id="navHome" class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">
-        Home
-      </button>
-      <button id="showFavsBtn" class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">
-        Favorites
-      </button>
-      <button id="navRandom" class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">
-        Random
-      </button>
-      <button id="logoutBtn" class="mt-auto w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">
-        Logout
-      </button>
-    </nav>
-  </aside>
+  </header>
 
-  <!-- MAIN -->
-  <div class="flex-1 flex flex-col bg-[#fdf9f5]">
-    <!-- HEADER -->
-    <header class="flex items-center justify-between p-6 bg-[#ffffff] border-b border-gray-300">
-      <div>
-        <h2 id="userGreeting" class="text-xl font-medium">
-          Jay Swaminarayan, Hari Patel!
-        </h2>
-        <p class="text-[#6b7280]">Search, browse, and favorite your bhajans.</p>
-      </div>
-    </header>
+  <div class="flex flex-1">
 
-    <!-- SEARCH + FILTER -->
-    <div class="p-6 grid gap-4 sm:grid-cols-2">
-      <div>
-        <input
-          id="searchBar"
-          list="bhajan-list"
-          type="text"
-          placeholder="Search by title, lyrics or translation…"
-          class="w-full px-4 py-2 border border-gray-300 bg-white text-[#343c6a] rounded focus:ring-2 focus:ring-[#4DB6AC]"
-        />
-        <datalist id="bhajan-list"></datalist>
+    <!-- SIDEBAR -->
+    <aside id="sidebar"
+           class="fixed inset-y-0 left-0 w-64 bg-[#ffffff] border-r border-gray-300 transform -translate-x-full md:translate-x-0 transition-transform z-20">
+      <div class="p-6 border-b border-gray-300">
+        <h1 class="text-2xl font-semibold">BAPS Bhajan Finder</h1>
       </div>
-      <div class="relative">
-        <select
-          id="categorySelect"
-          class="appearance-none w-full px-4 py-2 pr-8 border border-gray-300 bg-white text-[#343c6a] rounded focus:ring-2 focus:ring-[#4DB6AC]"
-        >
-          <option>All Categories</option>
-        </select>
-        <div class="pointer-events-none absolute inset-y-0 right-2 flex items-center">
-          <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg"
-               fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M19 9l-7 7-7-7" />
-          </svg>
+      <nav class="flex-1 p-4 space-y-1">
+        <button id="navHome"    class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">Home</button>
+        <button id="showFavsBtn"class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">Favorites</button>
+        <button id="navRandom"  class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">Random</button>
+      </nav>
+      <div class="mt-auto p-4 border-t border-gray-300">
+        <button id="logoutBtn" class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">Logout</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="flex-1 flex flex-col md:ml-64 transition-all">
+      <!-- DESKTOP HEADER -->
+      <header class="hidden md:flex items-center justify-between p-6 bg-[#ffffff] border-b border-gray-300">
+        <div>
+          <h2 id="userGreeting" class="text-xl font-medium">Welcome, Guest!</h2>
+          <p class="text-[#6b7280]">Search, browse, and favorite your bhajans.</p>
+        </div>
+        <div id="authLinksDesktop" class="space-x-4">
+          <a href="login.html#signin" class="hover:underline">Sign In</a>
+          <a href="login.html#signup" class="hover:underline">Sign Up</a>
+        </div>
+      </header>
+
+      <!-- SEARCH + FILTER -->
+      <div class="p-6 grid gap-4 sm:grid-cols-2">
+        <div>
+          <input id="searchBar" list="bhajan-list" type="text" placeholder="Search by title, lyrics or translation…"
+                 class="w-full px-4 py-2 border border-gray-300 bg-white text-[#343c6a] rounded focus:ring-2 focus:ring-[#4DB6AC]"/>
+          <datalist id="bhajan-list"></datalist>
+        </div>
+        <div class="relative">
+          <select id="categorySelect"
+                  class="appearance-none w-full px-4 py-2 pr-8 border border-gray-300 bg-white text-[#343c6a] rounded focus:ring-2 focus:ring-[#4DB6AC]">
+            <option>All Categories</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-2 flex items-center">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- HOME TAG -->
-    <div class="px-6 pt-4">
-      <h2 id="homeTag" class="text-2xl font-semibold">Home</h2>
-    </div>
-
-    <!-- RESULTS GRID -->
-    <main class="flex-1 overflow-auto p-6">
-      <div id="results" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-      <div class="mt-6 flex justify-center items-center space-x-4">
-        <button id="prevPage" class="px-4 py-2 border border-gray-300 text-[#343c6a] rounded hover:bg-[#fdf9f5]">
-          Prev
-        </button>
-        <span id="pageInfo" class="text-[#6b7280] font-medium"></span>
-        <button id="nextPage" class="px-4 py-2 border border-gray-300 text-[#343c6a] rounded hover:bg-[#fdf9f5]">
-          Next
-        </button>
+      <!-- HOME TAG -->
+      <div class="px-6 pt-4">
+        <h2 id="homeTag" class="text-2xl font-semibold">Home</h2>
       </div>
-    </main>
+
+      <!-- RESULTS GRID -->
+      <main class="flex-1 overflow-auto p-6">
+        <div id="results" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div class="mt-6 flex justify-center items-center space-x-4">
+          <button id="prevPage" class="px-4 py-2 border border-gray-300 text-[#343c6a] rounded hover:bg-[#fdf9f5]">Prev</button>
+          <span id="pageInfo" class="text-[#6b7280] font-medium"></span>
+          <button id="nextPage" class="px-4 py-2 border border-gray-300 text-[#343c6a] rounded hover:bg-[#fdf9f5]">Next</button>
+        </div>
+      </main>
+    </div>
   </div>
 
   <!-- DETAIL MODAL -->
   <div id="modal" class="fixed inset-0 hidden flex items-center justify-center bg-black bg-opacity-50 p-4">
     <div class="modal-content bg-white rounded-lg max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 text-[#343c6a] relative">
-      <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-[#4DB6AC]">
-        ✖
-      </button>
+      <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-[#4DB6AC]">✖</button>
       <h2 id="modalTitle" class="text-xl font-semibold mb-4"></h2>
       <p id="modalLyrics" class="whitespace-pre-line mb-4"></p>
       <p id="modalTranslation" class="whitespace-pre-line italic mb-4"></p>
       <div id="modalAudio" class="mb-4"></div>
       <div class="flex gap-2">
-        <button id="favModal" class="flex-1 px-4 py-2 border rounded hover:bg-[#4DB6AC] hover:text-white">Favorite</button>
-        <button id="downloadBtn" class="flex-1 px-4 py-2 border rounded hover:bg-[#4DB6AC] hover:text-white">Download</button>
-        <button id="copyBtn" class="flex-1 px-4 py-2 border rounded hover:bg-[#4DB6AC] hover:text-white">Copy</button>
+        <button id="favModal"   class="flex-1 px-4 py-2 border rounded hover:bg-[#4DB6AC] hover:text-white">Favorite</button>
+        <button id="downloadBtn"class="flex-1 px-4 py-2 border rounded hover:bg-[#4DB6AC] hover:text-white">Download</button>
+        <button id="copyBtn"    class="flex-1 px-4 py-2 border rounded hover:bg-[#4DB6AC] hover:text-white">Copy</button>
       </div>
     </div>
   </div>
 
   <script type="module" src="bhajan.js"></script>
+  <script>
+    // Sidebar toggle on mobile
+    document.getElementById('mobileMenuBtn').onclick = () => {
+      document.getElementById('sidebar').classList.toggle('-translate-x-full');
+    };
+
+    // Guest vs signed-in logic
+    (function loadUser() {
+      const params = new URLSearchParams(window.location.search);
+      const user   = params.get('user');
+      if (user) {
+        // hide auth links
+        document.getElementById('authLinksDesktop').style.display = 'none';
+        document.getElementById('authLinksMobile').style.display  = 'none';
+        document.getElementById('userGreeting').textContent =
+          `Jay Swaminarayan, ${params.get('first')} ${params.get('last')}`;
+      }
+    })();
+  </script>
 </body>
 </html>
