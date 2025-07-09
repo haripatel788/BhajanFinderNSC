@@ -1,0 +1,75 @@
+:root {
+    --bg-main:    #fdf9f5;
+    --bg-card:    #ffffff;
+    --text-main:  #343c6a;
+    --text-muted: #6b7280;
+    --accent:     #4DB6AC;
+  }
+  
+  /* Global reset & base */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body {
+    height:100%; background:var(--bg-main); color:var(--text-main);
+    font-family:'Inter',sans-serif; transition:background .3s,color .3s;
+  }
+  
+  /* Links */
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  
+  /* Panels */
+  nav,aside,header,footer,div.bg-white {
+    background:var(--bg-card)!important; color:var(--text-main)!important;
+    border-color:#e5e7eb!important;
+  }
+  
+  /* Buttons */
+  button {
+    background:var(--bg-card); color:var(--text-main);
+    border:1px solid #d1d5db; border-radius:.375rem;
+    padding:.5rem; cursor:pointer;
+    transition:background .2s,border-color .2s,color .2s;
+  }
+  button:hover {
+    background:var(--accent)!important;
+    border-color:var(--accent)!important;
+    color:#fff!important;
+  }
+  
+  /* Inputs / selects / textareas */
+  input,select,textarea {
+    background:var(--bg-card); color:var(--text-main);
+    border:1px solid #d1d5db; border-radius:.375rem;
+    padding:.5rem; width:100%;
+    transition:border-color .2s,box-shadow .2s;
+  }
+  input:focus,select:focus,textarea:focus {
+    outline:none; border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(77,182,172,0.3);
+  }
+  select.appearance-none {
+    -webkit-appearance:none; -moz-appearance:none; appearance:none;
+  }
+  
+  /* Cards */
+  #results > div {
+    background:var(--bg-card); color:var(--text-main);
+    border:1px solid #e5e7eb; border-radius:.5rem;
+    padding:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);
+    transition:background .3s,border-color .3s;
+  }
+  
+  /* Modal */
+  .modal-content {
+    background:var(--bg-card); color:var(--text-main);
+  }
+  
+  /* Typography helper */
+  .text-muted { color:var(--text-muted); }
+  
+  /* Scrollbar */
+  body::-webkit-scrollbar { width:8px; }
+  body::-webkit-scrollbar-thumb {
+    background:#cbd5e0; border-radius:4px;
+  }
+  
