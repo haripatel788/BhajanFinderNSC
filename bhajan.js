@@ -135,7 +135,7 @@ function render() {
         </div>
         <p class="text-sm mb-1">${b.Lyrics.slice(0,80).replace(/\n/g,' ')}…</p>
         <p class="italic text-xs mb-3">${b["English Translation"].slice(0,80).replace(/\n/g,' ')}…</p>
-        <button class="w-full px-3 py-2 border border-gray-300 rounded view-btn">View Details</button>
+        <button class="w-full px-3 py-2 border border-gray-300 rounded view-btn">View More</button>
       `;
       card.querySelector(".fav-star").onclick = () => toggleFavorite(b["Bhajan Name"]);
       card.querySelector(".view-btn").onclick = () => openModal(b);
