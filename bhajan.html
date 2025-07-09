@@ -4,16 +4,17 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>BAPS Bhajan Finder</title>
-  <script src="https://cdn.tailwindcss.com" defer></script>
-  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="login.css"/>
 </head>
-<body class="flex h-screen font-inter bg-[#fdf9f5] text-[#343c6a] overflow-hidden">
+<body class="font-inter bg-[#fdf9f5] text-[#343c6a]">
 
-  <!-- MOBILE TOPBAR -->
+  <!-- MOBILE HEADER -->
   <header class="md:hidden flex items-center justify-between p-4 bg-[#ffffff] border-b border-gray-300">
     <button id="mobileMenuBtn" class="p-2 rounded border">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor"><path stroke-linecap="round"
-        stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg class="w-6 h-6" fill="none" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
     </button>
     <h1 class="text-lg font-semibold">BAPS Bhajan Finder</h1>
     <div id="authLinksMobile" class="space-x-2">
@@ -22,27 +23,34 @@
     </div>
   </header>
 
-  <div class="flex flex-1">
+  <div class="flex md:flex-row flex-col md:min-h-screen">
 
     <!-- SIDEBAR -->
     <aside id="sidebar"
-           class="fixed inset-y-0 left-0 w-64 bg-[#ffffff] border-r border-gray-300
-                  transform -translate-x-full md:translate-x-0 transition-transform z-30">
+           class="md:relative fixed top-0 left-0 h-full w-64 bg-[#ffffff] border-r border-gray-300 transform -translate-x-full md:translate-x-0 md:block transition-transform z-40">
       <div class="p-6 border-b border-gray-300">
         <h1 class="text-2xl font-semibold">BAPS Bhajan Finder</h1>
       </div>
-      <nav class="flex-1 p-4 space-y-1">
-        <button id="navHome"    class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">Home</button>
-        <button id="showFavsBtn"class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">Favorites</button>
-        <button id="navRandom"  class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">Random</button>
+      <nav class="p-4 space-y-2">
+        <button id="navHome" class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">Home</button>
+        <button id="showFavsBtn" class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">Favorites</button>
+        <button id="navRandom" class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">Random</button>
       </nav>
       <div class="mt-auto p-4 border-t border-gray-300">
         <button id="logoutBtn" class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">Logout</button>
       </div>
+
+      <div class="mt-auto p-4 border-t border-gray-300">
+        <button href="login.html#signin" class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]" style="margin-bottom: 10px;">Sign In</button>
+        <button href="login.html#signup" class="w-full text-left px-3 py-2 rounded hover:bg-[#fdf9f5]">Sign Up</button>
+      </div>
+
+
+
     </aside>
 
     <!-- MAIN CONTENT -->
-    <div class="flex-1 flex flex-col md:ml-64 transition-all overflow-hidden">
+    <main class="flex-1 md:ml-64">
       <!-- DESKTOP HEADER -->
       <header class="hidden md:flex items-center justify-between p-6 bg-[#ffffff] border-b border-gray-300">
         <div>
@@ -56,13 +64,10 @@
       </header>
 
       <!-- SEARCH + FILTER -->
-      <div class="hidden md:grid p-6 grid-cols-2 gap-4">
-        <div>
-          <input id="searchBar" list="bhajan-list" type="text"
-                 placeholder="Search by title, lyrics or translation…"
-                 class="w-full px-4 py-2 border border-gray-300 bg-white text-[#343c6a] rounded focus:ring-2 focus:ring-[#4DB6AC]"/>
-          <datalist id="bhajan-list"></datalist>
-        </div>
+      <div class="p-6 grid gap-4 sm:grid-cols-2">
+        <input id="searchBar" list="bhajan-list" type="text" placeholder="Search..."
+               class="w-full px-4 py-2 border border-gray-300 bg-white text-[#343c6a] rounded focus:ring-2 focus:ring-[#4DB6AC]"/>
+        <datalist id="bhajan-list"></datalist>
         <div class="relative">
           <select id="categorySelect"
                   class="appearance-none w-full px-4 py-2 pr-8 border border-gray-300 bg-white text-[#343c6a] rounded focus:ring-2 focus:ring-[#4DB6AC]">
@@ -70,68 +75,82 @@
           </select>
           <div class="pointer-events-none absolute inset-y-0 right-2 flex items-center">
             <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M19 9l-7 7-7-7"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
           </div>
         </div>
       </div>
 
-      <!-- RESULTS GRID (full-width on mobile!) -->
-      <main class="flex-1 overflow-auto p-6">
-        <div id="results"
-             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- cards injected here -->
-        </div>
-
-        <!-- pagination hidden on mobile -->
-        <div class="hidden md:flex mt-6 justify-center items-center space-x-4">
-          <button id="prevPage"
-                  class="px-4 py-2 border border-gray-300 text-[#343c6a] rounded hover:bg-[#fdf9f5]">
-            Prev
-          </button>
-          <span id="pageInfo" class="text-[#6b7280] font-medium"></span>
-          <button id="nextPage"
-                  class="px-4 py-2 border border-gray-300 text-[#343c6a] rounded hover:bg-[#fdf9f5]">
-            Next
-          </button>
-        </div>
-      </main>
-    </div>
-  </div>
-
-  <!-- DETAIL MODAL -->
-  <div id="modal"
-       class="fixed inset-0 hidden flex items-center justify-center bg-black bg-opacity-50 p-4 z-40">
-    <div class="modal-content bg-white rounded-lg max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 text-[#343c6a] relative">
-      <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-[#4DB6AC]">✖</button>
-      <h2 id="modalTitle" class="text-xl font-semibold mb-4"></h2>
-      <p id="modalLyrics" class="whitespace-pre-line mb-4"></p>
-      <p id="modalTranslation" class="whitespace-pre-line italic mb-4"></p>
-      <div id="modalAudio" class="mb-4"></div>
-      <div class="flex gap-2">
-        <button id="favModal"    class="flex-1 px-4 py-2 border rounded hover:bg-[#4DB6AC] hover:text-white">Favorite</button>
-        <button id="downloadBtn" class="flex-1 px-4 py-2 border rounded hover:bg-[#4DB6AC] hover:text-white">Download</button>
-        <button id="copyBtn"     class="flex-1 px-4 py-2 border rounded hover:bg-[#4DB6AC] hover:text-white">Copy</button>
+      <!-- HOME TAG -->
+      <div class="px-6 pt-4">
+        <h2 id="homeTag" class="text-2xl font-semibold">Home</h2>
       </div>
-    </div>
+
+      <!-- RESULTS -->
+      <section class="p-6">
+        <div id="results" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div class="mt-6 flex justify-center items-center space-x-4">
+          <button id="prevPage" class="px-4 py-2 border border-gray-300 text-[#343c6a] rounded hover:bg-[#fdf9f5]">Prev</button>
+          <span id="pageInfo" class="text-[#6b7280] font-medium"></span>
+          <button id="nextPage" class="px-4 py-2 border border-gray-300 text-[#343c6a] rounded hover:bg-[#fdf9f5]">Next</button>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <script type="module" src="bhajan.js"></script>
+<!-- DETAIL MODAL -->
+<div id="modal" class="fixed inset-0 hidden flex items-center justify-center bg-black bg-opacity-50 p-4">
+  <div class="modal-content bg-white rounded-lg max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 text-[#343c6a] relative">
+    <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-[#4DB6AC]">✖</button>
+    <h2 id="modalTitle" class="text-xl font-semibold mb-4"></h2>
+    <p id="modalLyrics" class="whitespace-pre-line mb-4"></p>
+    <p id="modalTranslation" class="whitespace-pre-line italic mb-4"></p>
+    <div id="modalAudio" class="mb-4"></div>
+    <div class="flex gap-2">
+      <button id="favModal"    class="flex-1 px-4 py-2 border rounded hover:bg-[#4DB6AC] hover:text-white">Favorite</button>
+      <button id="downloadBtn" class="flex-1 px-4 py-2 border rounded hover:bg-[#4DB6AC] hover:text-white">Download</button>
+      <button id="copyBtn"     class="flex-1 px-4 py-2 border rounded hover:bg-[#4DB6AC] hover:text-white">Copy</button>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Script -->
   <script>
-    // Mobile sidebar toggle
     document.getElementById('mobileMenuBtn').onclick = () => {
       document.getElementById('sidebar').classList.toggle('-translate-x-full');
     };
 
-    // Hide auth links once signed in
     (function loadUser() {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('user')) {
+      const user = new URLSearchParams(window.location.search).get('user');
+      if (user) {
         document.getElementById('authLinksDesktop').style.display = 'none';
-        document.getElementById('authLinksMobile').style.display  = 'none';
+        document.getElementById('authLinksMobile').style.display = 'none';
       }
     })();
-  </script>
+  // Toggle mobile sidebar
+  document.getElementById('mobileMenuBtn').onclick = () => {
+    document.getElementById('sidebar').classList.toggle('-translate-x-full');
+  };
+
+  // Close sidebar if you click outside it (on mobile only)
+  document.addEventListener("click", e => {
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.getElementById("mobileMenuBtn");
+
+    // Only apply this on mobile
+    if (window.innerWidth >= 768) return;
+
+    const clickedInsideSidebar = sidebar.contains(e.target);
+    const clickedMenuBtn = menuBtn.contains(e.target);
+
+    if (!clickedInsideSidebar && !clickedMenuBtn) {
+      sidebar.classList.add("-translate-x-full");
+    }
+  });
+</script>
+
+
+  <script type="module" src="bhajan.js"></script>
 </body>
 </html>
